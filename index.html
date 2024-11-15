@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Matrices Avanzada</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+            messageStyle: "none"
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora Avanzada de Matrices</h1>
+
+        <!-- Selector de tipo de operaciones -->
+        <div class="operation-type-selector">
+            <h3>Tipo de Operaciones:</h3>
+            <div class="type-buttons">
+                <button class="type-btn active" data-type="integer">Enteros (ℤ)</button>
+                <button class="type-btn" data-type="rational">Racionales (ℚ)</button>
+                <button class="type-btn" data-type="real">Reales (ℝ)</button>
+            </div>
+        </div>
+        
+        <div class="matrix-controls">
+            <!-- Matriz A -->
+            <div class="matrix-container">
+                <h3>Matriz A</h3>
+                <div class="dimension-controls">
+                    <label>Filas: <input type="number" id="rowsA" value="2" min="1" max="3"></label>
+                    <label>Columnas: <input type="number" id="colsA" value="2" min="1" max="3"></label>
+                </div>
+                <div class="scalar-control">
+                    <label>c₁ = <input type="number" id="c1" value="1" step="any"></label>
+                </div>
+                <div id="matrixA" class="matrix-input"></div>
+            </div>
+
+            <!-- Matriz B -->
+            <div class="matrix-container">
+                <h3>Matriz B</h3>
+                <div class="dimension-controls">
+                    <label>Filas: <input type="number" id="rowsB" value="2" min="1" max="3"></label>
+                    <label>Columnas: <input type="number" id="colsB" value="2" min="1" max="3"></label>
+                </div>
+                <div class="scalar-control">
+                    <label>c₂ = <input type="number" id="c2" value="1" step="any"></label>
+                </div>
+                <div id="matrixB" class="matrix-input"></div>
+            </div>
+
+            <!-- Matriz C -->
+            <div class="matrix-container">
+                <h3>Matriz C</h3>
+                <div class="dimension-controls">
+                    <label>Filas: <input type="number" id="rowsC" value="2" min="1" max="3"></label>
+                    <label>Columnas: <input type="number" id="colsC" value="2" min="1" max="3"></label>
+                </div>
+                <div class="scalar-control">
+                    <label>c₃ = <input type="number" id="c3" value="1" step="any"></label>
+                </div>
+                <div id="matrixC" class="matrix-input"></div>
+            </div>
+
+            <!-- Matriz D -->
+            <div class="matrix-container">
+                <h3>Matriz D</h3>
+                <div class="dimension-controls">
+                    <label>Filas: <input type="number" id="rowsD" value="2" min="1" max="3"></label>
+                    <label>Columnas: <input type="number" id="colsD" value="2" min="1" max="3"></label>
+                </div>
+                <div class="scalar-control">
+                    <label>c₄ = <input type="number" id="c4" value="1" step="any"></label>
+                </div>
+                <div id="matrixD" class="matrix-input"></div>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button id="calculateBtn">Calcular</button>
+            <button id="resetBtn">Reiniciar</button>
+        </div>
+
+        <div class="results-container">
+            <div id="validationMessage" class="error-message"></div>
+            
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="sumResults">B + C</button>
+                    <button class="tab-btn" data-tab="productResults">Productos</button>
+                    <button class="tab-btn" data-tab="formulas">Fórmulas</button>
+                </div>
+
+                <div id="sumResults" class="tab-content active">
+                    <h3>Suma de matrices B + C</h3>
+                    <div id="sumBCResult" class="math-result"></div>
+                </div>
+
+                <div id="productResults" class="tab-content">
+                    <h3>Productos con suma interna</h3>
+                    <div id="productABCDResult" class="math-result"></div>
+                    <div id="scalarProductResult" class="math-result"></div>
+                </div>
+
+                <div id="formulas" class="tab-content">
+                    <h3>Fórmulas y Propiedades</h3>
+                    <div class="formula-box">
+                        <h4>Operaciones:</h4>
+                        <p>1. B + C</p>
+                        <p>2. A(B + C)D</p>
+                        <p>3. (c₁A)((c₂B + c₃C))(c₄D)</p>
+                    </div>
+                    <div class="formula-box">
+                        <h4>Propiedades:</h4>
+                        <ul>
+                            <li>Distributividad: A(B + C) = AB + AC</li>
+                            <li>Asociatividad con escalares: c(AB) = (cA)B = A(cB)</li>
+                            <li>Las matrices deben tener dimensiones compatibles</li>
+                        </ul>
+                    </div>
+                    <div class="formula-box">
+                        <h4>Tipos de números:</h4>
+                        <ul>
+                            <li>Enteros (ℤ): {..., -2, -1, 0, 1, 2, ...}</li>
+                            <li>Racionales (ℚ): números expresados como p/q</li>
+                            <li>Reales (ℝ): incluye todos los números decimales</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="matrix-utils.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
